@@ -1,5 +1,6 @@
 package com.appdevblog.ws.api.resourceserver.security;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -7,6 +8,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 @EnableGlobalMethodSecurity(securedEnabled=true,prePostEnabled = true)
 @EnableWebSecurity
@@ -27,6 +33,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter{
         });
 //        http.formLogin();
 //        http.httpBasic();
+       /* http.cors();*/
         http.oauth2ResourceServer().jwt().jwtAuthenticationConverter(jwtAuthenticationConverter);
         /*http.authorizeRequests()
                 .antMatchers(HttpMethod.GET,"/users")
@@ -39,4 +46,16 @@ public class WebSecurity extends WebSecurityConfigurerAdapter{
                 .jwt()
                 .jwtAuthenticationConverter(jwtAuthenticationConverter);*/
     }
+
+    /*@Bean
+    CorsConfigurationSource corsConfigurationSource(){
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("POST","GET"));
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**",configuration);
+        return source;
+    }*/
 }
